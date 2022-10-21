@@ -2,26 +2,27 @@
 
 import { makeStyles, Grid} from '@material-ui/core';
 import { RoomCard } from './RoomCard';
-import mockData from '../mockData';
+import hotels, { rooms } from '../InitialData';
 import { Link, useParams } from 'react-router-dom';
 
 export const HotelPage = () => {
     const classes = useStyle();
     const { hotelId } = useParams<{ hotelId: string }>();
-    const hotel = mockData[Number(hotelId)];
+    const hotel = hotels.find((item) => item.id === Number(hotelId));
+    const hotelRooms = rooms.filter((room) => room.hotelId === hotel?.id);
 
     return (
         <>
             <div className={ classes.root}>
-                <h1>{hotel.title}</h1>
+                <h1>{hotel?.title}</h1>
                 <Grid container className={ classes.section} spacing={3}>
                         {
                                 
-                            hotel.rooms.map((item, index) => (
+                            hotelRooms.map((item) => (
                                 <Grid item sm={6} md={4} lg={3 }>
-                                    <Link to={`/hotel/${hotelId}/room/${index}`}>
+                                    <Link to={`/hotel/${hotelId}/room/${item.id}`}>
                                     <RoomCard 
-                                        key={index} 
+                                        key={item.id} 
                                         image={item.src} 
                                         title={item.title}
                                         description={item.description}

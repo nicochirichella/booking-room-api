@@ -3,13 +3,13 @@
 import React from 'react';
 import { makeStyles, Typography, Button, Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import mockData from '../mockData';
+import hotels, { rooms } from '../InitialData';
 
 export const Booking = () => {
     const classes = useStyle();
     const { roomId, hotelId } = useParams();
-    const hotel = mockData[Number(hotelId)];
-    const room = hotel.rooms[Number(roomId)];
+    const hotel = hotels.find((item) => item.id === Number(hotelId));
+    const room = rooms.find((item) => item.id === Number(roomId));
 
     return (
         <>

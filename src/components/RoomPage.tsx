@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { makeStyles, Typography, Button } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import mockData, { bookings } from '../mockData';
+import hotels, { bookings, rooms } from '../InitialData';
 import { Booking } from './Booking';
 import { BookingForm } from './BookingForm';
 import { DatePicker2 } from './DatePicker2';
@@ -12,10 +12,9 @@ import { DatePicker2 } from './DatePicker2';
 export const RoomPage = () => {
     const classes = useStyle();
     const { roomId, hotelId } = useParams();
-    const hotel = mockData[Number(hotelId)];
-    const room = hotel.rooms[Number(roomId)];
+    const room = rooms.find((item) => item.id === Number(roomId));
 
-    const roomsBookings = bookings.filter((booking) => booking.roomId === Number(roomId) && booking.hotelId === Number(hotelId));
+    const roomsBookings = bookings.filter((booking) => booking.roomId === room?.id && booking.hotelId === room?.hotelId);
     const blockedDates: Date[][] = roomsBookings.map((booking) => {
         const startDate = new Date(booking.startDate);
         const endDate = new Date(booking.endDate);
@@ -27,10 +26,10 @@ export const RoomPage = () => {
     return (
         <>
             <div className={classes.root}>
-                <Typography variant='h4' color='textPrimary'>{room.title}</Typography>
+                <Typography variant='h4' color='textPrimary'>{room?.title}</Typography>
                 <div className={classes.info}>
-                    <img className={classes.media} src={room.src} alt={room.title} />
-                    <Typography variant='h5' color='textPrimary'>{room.description}</Typography>
+                    <img className={classes.media} src={room?.src} alt={room?.title} />
+                    <Typography variant='h5' color='textPrimary'>{room?.description}</Typography>
                 </div>
                 <div className={classes.button}>
                     <Button variant='contained' color='primary' onClick={() => setNewBooking(true)}>New Booking</Button>

@@ -5,7 +5,7 @@ import { makeStyles, CssBaseline, Button, Grid } from '@material-ui/core';
 import { Banner } from './Banner';
 import { RoomCard } from './RoomCard';
 import { DatePicker } from './DatePicker';
-import mockData from '../mockData';
+import hotels from '../InitialData';
 import { Link } from 'react-router-dom';
 
 export const Home = () => {
@@ -26,11 +26,11 @@ export const Home = () => {
                <Grid container className={ classes.section} spacing={3}>
                     {
                             
-                        mockData.map((item, index) => (
+                        hotels.map((item) => (
                             <Grid item sm={6} md={4} lg={3 }>
-                                <Link to={`/hotel/${index}`}>
+                                <Link to={`/hotel/${item.id}`}>
                                 <RoomCard 
-                                    key={index} 
+                                    key={item.id} 
                                     image={item.src} 
                                     title={item.title}
                                     description={item.description}

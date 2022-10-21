@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles, Typography, Button, Input, TextField } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import mockData, { bookings } from '../mockData';
+import hotels, { bookings } from '../InitialData';
 import { Booking } from './Booking';
 import { DatePicker2 } from './DatePicker2';
 
