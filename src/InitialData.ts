@@ -54,16 +54,16 @@ export const bookings = [
         startDate: '2022-10-1',
         endDate: '2022-10-5',
         description: 'Booking 1 description',
-        hotelId: 0,
-        roomId: 0,
+        hotelId: 1,
+        roomId: 1,
     },
     {
         id: 2,
         startDate: '2022-10-10',
         endDate: '2022-10-15',
         description: 'Booking 2 description',
-        hotelId: 0,
-        roomId: 0,
+        hotelId: 1,
+        roomId: 1,
     }
 ]
 
