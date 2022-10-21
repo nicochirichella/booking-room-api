@@ -1,21 +1,22 @@
 // create Room Page Component
 // Showing room title, room description and room image
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { makeStyles, Typography, Button } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import hotels, { bookings, rooms } from '../InitialData';
-import { Booking } from './Booking';
+import { rooms } from '../InitialData';
 import { BookingForm } from './BookingForm';
-import { DatePicker2 } from './DatePicker2';
+import { BookingInterface } from './Booking';
 
 export const RoomPage = () => {
     const classes = useStyle();
     const { roomId, hotelId } = useParams();
     const room = rooms.find((item) => item.id === Number(roomId));
 
-    const roomsBookings = bookings.filter((booking) => booking.roomId === room?.id && booking.hotelId === room?.hotelId);
-    const blockedDates: Date[][] = roomsBookings.map((booking) => {
+    const bookings = JSON.parse(localStorage.getItem('bookings')?? '[]') as BookingInterface[];
+    const roomsBookings = bookings.filter((booking: BookingInterface) => booking.roomId === room?.id && booking.hotelId === room?.hotelId);
+
+    const blockedDates: Date[][] = roomsBookings.map((booking: BookingInterface) => {
         const startDate = new Date(booking.startDate);
         const endDate = new Date(booking.endDate);
         const dates: Date[] = [startDate, endDate];

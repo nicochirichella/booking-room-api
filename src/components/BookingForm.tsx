@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles, Typography, Button, Input, TextField } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import hotels, { bookings } from '../InitialData';
-import { Booking } from './Booking';
+import { BookingInterface } from './Booking';
 import { DatePicker2 } from './DatePicker2';
 
 export const BookingForm = (props: {
@@ -20,16 +20,26 @@ export const BookingForm = (props: {
     const [ endDate, setEndDate ] = useState(new Date());
     const [ description, setDescription ] = useState('');
 
+    const bookings = JSON.parse(localStorage.getItem('bookings')?? '[]') as BookingInterface[];
+
     const handleSaveBooking = () => {
         console.log('saving booking');
-        console.log({
+        bookings.push({
+            id: bookings.length + 1,
             name,
             email,
             phone,
-            startDate,
-            endDate,
+            startDate: startDate.toDateString(),
+            endDate: endDate.toDateString(),
             description,
+            roomId: Number(roomId),
+            hotelId: Number(hotelId),
+            price: 100,
+            currency: 'USD',
+            paymentMethod: 'cash',
+            guests: 1,
         });
+        localStorage.setItem('bookings', JSON.stringify(bookings));
         props.onClose();
     };
     
@@ -51,7 +61,7 @@ export const BookingForm = (props: {
                     </div>
                     <div className={classes.input}>
                         <Typography variant='h6' color='textPrimary'>Description</Typography>
-                        <TextField multiline rows={4} />
+                        <TextField multiline rows={4} onChange={(e)=> setPhone(e.target.value)}/>
                     </div>
                     <DatePicker2 
                         blockedDates={props.blockedDates} 
