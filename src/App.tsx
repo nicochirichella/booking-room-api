@@ -18,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/hotel/:hotelId" element={<HotelPage />} />
+          <Route path="/hotel/:hotelId/search" element={<SearchPage />} />
           <Route path="/hotel/:hotelId/room/:roomId" element={<RoomPage />} />
           <Route path="/booking/hotel/:hotelId" element={<BookingGrid />} />
           <Route path="/booking/hotel/:hotelId/room/:roomId" element={<BookingGrid />} />

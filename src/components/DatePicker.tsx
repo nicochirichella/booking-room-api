@@ -4,7 +4,7 @@ import React from 'react';
 import { makeStyles, Button } from '@material-ui/core';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker, RangeKeyDict, Range } from 'react-date-range';
 import { useNavigate } from 'react-router-dom'; 
 
 export const DatePicker = (props: {
@@ -13,41 +13,6 @@ export const DatePicker = (props: {
     const classes = useStyle();
     // const history = useHistory();
     const navigate = useNavigate();
-    const today = new Date();
-    const tomorrow = new Date().setDate(today.getDate() + 1);
-
-    const addDays = (date: Date, days: number) => {
-        const result = new Date();
-        result.setDate(date.getDate() + days);
-        return result;
-    };
-
-    // const blockedRanges = props.blockedDates?.map((blockedDate) => {
-    //     return {
-    //         startDate: blockedDate[0],
-    //         endDate: blockedDate[1],
-    //         key: 'selection',
-    //         disabled: true,
-    //         color: 'red'
-    //     };
-    // });
-
-    const range1= {
-        startDate: new Date('2021-10-05'),
-        endDate: addDays(new Date('2021-10-05'), 2),
-        key: 'selection',
-        disabled: true,
-        color: 'red'
-    }
-
-    const range2 = {
-        startDate: new Date('2021-10-15'),
-        endDate: addDays(new Date('2021-10-15'), 10),
-        key: 'selection',
-        disabled: true,
-        color: 'green'
-    }
-
     const selectionRange = {
         startDate: new Date(),
         endDate: new Date(),
@@ -56,8 +21,11 @@ export const DatePicker = (props: {
         color: 'blue'
     }
 
-    const handleSelect = () => {
-        console.log('handleSelect');
+    const handleSelect = (value: RangeKeyDict) => {
+        localStorage.setItem('searchFilters', JSON.stringify({
+            startDate: value['selection'].startDate?.toISOString().split('T')[0],
+            endDate: value['selection'].endDate?.toISOString().split('T')[0]
+        }));
     }
 
     return (
@@ -65,7 +33,7 @@ export const DatePicker = (props: {
             <div className={classes.root}>
                 <DateRangePicker ranges={[selectionRange]} 
                 disabledDates={[new Date('2021-10-05'), new Date('2021-10-15')]}
-                onChange={handleSelect} />
+                onChange={(value) => handleSelect(value)} />
                 <div className={classes.inputSection}>
                 <Button 
                     onClick={() => navigate("./search")}
