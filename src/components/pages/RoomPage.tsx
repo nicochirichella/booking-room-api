@@ -1,12 +1,9 @@
-// create Room Page Component
-// Showing room title, room description and room image
-
 import { useState } from 'react';
 import { makeStyles, Typography, Button } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
-import { rooms } from '../InitialData';
-import { BookingForm } from './BookingForm';
-import { BookingInterface } from './Booking';
+import { useParams, Link } from 'react-router-dom';
+import { rooms } from '../../InitialData';
+import { BookingForm } from '../BookingForm';
+import { BookingInterface } from '../Booking';
 
 export const RoomPage = () => {
     const classes = useStyle();
@@ -33,6 +30,9 @@ export const RoomPage = () => {
                     <Typography variant='h5' color='textPrimary'>{room?.description}</Typography>
                 </div>
                 <div className={classes.button}>
+                    <Link to={`/booking/hotel/${hotelId}/room/${roomId}`}>
+                        <Button variant='contained' color='primary'> Show Bookings </Button>
+                    </Link>
                     <Button variant='contained' color='primary' onClick={() => setNewBooking(true)}>New Booking</Button>
                 </div>
                 {
@@ -76,8 +76,13 @@ const useStyle = makeStyles((theme) => ({
         objectFit: 'cover',
     },
     button: {
-        height: '50px',
-        width: '200px',
+        display: 'flex',
+        flexDirection: 'row',
         marginTop: theme.spacing(2),
+        "& button": {
+            height: '50px',
+            width: '200px',
+            margin: theme.spacing(2),
+        },
     }
 }));

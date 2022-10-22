@@ -1,5 +1,3 @@
-// create search page component
-
 import { makeStyles, Typography } from '@material-ui/core';
 
 export const SearchPage = () => {

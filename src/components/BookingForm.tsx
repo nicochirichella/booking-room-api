@@ -29,8 +29,8 @@ export const BookingForm = (props: {
             name,
             email,
             phone,
-            startDate: startDate.toDateString(),
-            endDate: endDate.toDateString(),
+            startDate: startDate.toLocaleDateString(),
+            endDate: endDate.toLocaleDateString(),
             description,
             roomId: Number(roomId),
             hotelId: Number(hotelId),
@@ -61,7 +61,7 @@ export const BookingForm = (props: {
                     </div>
                     <div className={classes.input}>
                         <Typography variant='h6' color='textPrimary'>Description</Typography>
-                        <TextField multiline rows={4} onChange={(e)=> setPhone(e.target.value)}/>
+                        <TextField multiline rows={4} onChange={(e)=> setDescription(e.target.value)}/>
                     </div>
                     <DatePicker2 
                         blockedDates={props.blockedDates} 

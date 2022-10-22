@@ -1,11 +1,9 @@
-// create home component
-
 import { useState } from 'react';
 import { makeStyles, CssBaseline, Button, Grid } from '@material-ui/core';
-import { Banner } from './Banner';
-import { RoomCard } from './RoomCard';
-import { DatePicker } from './DatePicker';
-import hotels from '../InitialData';
+import { Banner } from '../Banner';
+import { RoomCard } from '../RoomCard';
+import { DatePicker } from '../DatePicker';
+import hotels from '../../InitialData';
 import { Link } from 'react-router-dom';
 
 export const Home = () => {

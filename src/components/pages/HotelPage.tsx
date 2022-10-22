@@ -1,8 +1,6 @@
-// create HotelPage component
-
-import { makeStyles, Grid} from '@material-ui/core';
-import { RoomCard } from './RoomCard';
-import hotels, { rooms } from '../InitialData';
+import { makeStyles, Grid, Button} from '@material-ui/core';
+import { RoomCard } from '../RoomCard';
+import hotels, { rooms } from '../../InitialData';
 import { Link, useParams } from 'react-router-dom';
 
 export const HotelPage = () => {
@@ -32,6 +30,9 @@ export const HotelPage = () => {
                             ))
                         }
                 </Grid>
+                <Link to={`/booking/hotel/${hotelId}`}>
+                    <Button variant='contained' color='primary'> Show Bookings </Button>
+                </Link>
             </div>
         </>
     );
