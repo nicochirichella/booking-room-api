@@ -8,8 +8,8 @@ export interface BookingInterface {
     id: number;
     roomId: number;
     hotelId: number;
-    startDate: string;
-    endDate: string;
+    startDate: number;
+    endDate: number;
     name: string;
     email: string;
     phone: string;

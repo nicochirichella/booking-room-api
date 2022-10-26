@@ -3,32 +3,29 @@ import { useParams, Link } from 'react-router-dom';
 import { BookingInterface } from '../Booking';
 import { RoomCard } from '../RoomCard';
 import { rooms } from '../../InitialData';
-
-interface SearchFilters {
-    startDate: string;
-    endDate: string;
-    guests?: number;
-    price?: number;
-}
+import { selectSearchFilters, SearchFiltersState } from '../../features/searchFilters/searchFiltersSlice';
+import { useAppSelector } from '../../app/hooks';
 
 export const SearchPage = () => {
     const classes = useStyle();
     const { hotelId } = useParams();
 
-    const betweenDates = (startDate: string, endDate: string, date: string) => {
+    const betweenDates = (startDate: number, endDate: number, date: number) => {
         return new Date(date) >= new Date(startDate) && new Date(date) <= new Date(endDate);
     };
 
-    const bookingColapses = (booking: BookingInterface, filters: SearchFilters) => {
-        const result = betweenDates(booking.startDate, booking.endDate, filters.startDate) 
-            || betweenDates(booking.startDate, booking.endDate, filters.endDate)
-            || betweenDates(filters.startDate, filters.endDate, booking.startDate)
-            || betweenDates(filters.startDate, filters.endDate, booking.endDate);
+    const searchFilters = useAppSelector(selectSearchFilters);
+
+    const bookingColapses = (booking: BookingInterface, filters: SearchFiltersState) => {
+        const result = betweenDates(booking.startDate, booking.endDate, filters.checkinDate) 
+            || betweenDates(booking.startDate, booking.endDate, filters.checkoutDate)
+            || betweenDates(filters.checkinDate, filters.checkoutDate, booking.startDate)
+            || betweenDates(filters.checkinDate, filters.checkoutDate, booking.endDate);
         return result
     };
 
     const bookings = JSON.parse(localStorage.getItem('bookings')?? '[]') as BookingInterface[];
-    const searchFilters = JSON.parse(localStorage.getItem('searchFilters')?? '{}') as SearchFilters;
+    //const searchFilters = JSON.parse(localStorage.getItem('searchFilters')?? '{}') as SearchFilters;
     const bookedRooms: BookingInterface[] = bookings.filter((booking: BookingInterface) => bookingColapses(booking, searchFilters));
    
     let hotelRooms = [];
