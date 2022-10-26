@@ -5,9 +5,25 @@ import { AppBar, Toolbar, makeStyles, InputBase, Typography, Avatar } from '@mat
 import SearchIcon from '@material-ui/icons/Search';
 import logo from '../images/hotelLogo.png';
 import { Link } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { selectUser, logout } from '../features/user/userSlice';
+import { getAuth, signOut } from 'firebase/auth';
+
 
 export const Header = () => {
     const classes = useStyle();
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(selectUser);
+    console.log('user', user);
+
+    const handleLogout = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            dispatch(logout());
+        }).catch((error) => {
+            // An error happened.
+        });
+    }
   
     const displayDesktop = () => { 
         return (
@@ -20,8 +36,24 @@ export const Header = () => {
                     <SearchIcon />
                 </div>
                 <div className={ classes.right }>
-                    <Typography> Sign in</Typography>
-                    <Avatar className={ classes.avatar } />
+                    {
+                        user.user ? (
+                            <>
+                                <Typography className={ classes.user }>{user.user?.displayName}</Typography>
+                                <Avatar className={ classes.avatar } src={user.user?.photoURL} />
+                                <Typography className={ classes.logout } onClick={handleLogout}>Logout</Typography>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login">
+                                    <Avatar className={ classes.avatar } />
+                                </Link>
+                                <Link to="/login">
+                                    <Typography className={ classes.login }>Login</Typography>
+                                </Link>
+                            </>
+                        )
+                    }
                 </div>
             </Toolbar>
         )
@@ -77,11 +109,37 @@ const useStyle = makeStyles((theme) => ({
         display: 'flex',
         color: '#333',
         alignItems: 'center',
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(1),
         width: '50%',
     },
     avatar: {
         marginLeft: theme.spacing(2),
-    }
+    },
+    link: {
+        textDecoration: 'none',
+        color: '#333',
+        margin: theme.spacing(0,2,0,2),
+    },
+    linkText: {
+        fontSize: '1.2rem',
+        fontWeight: 500,
+    },
+    user: {
+        fontSize: '1.2rem',
+        fontWeight: 500,
+        marginRight: theme.spacing(1),
+    },
+    logout: {
+        fontSize: '1.2rem',
+        fontWeight: 500,
+        marginLeft: theme.spacing(1),
+        cursor: 'pointer',
+    },
+    login: {
+        fontSize: '1.2rem',
+        fontWeight: 500,
+        marginLeft: theme.spacing(1),
+        cursor: 'pointer',
+    },
 }));  
 
