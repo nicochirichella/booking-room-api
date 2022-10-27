@@ -42,11 +42,8 @@ export const DatePicker2 = (props: {
                     value={dates}
                     onChange={(value) => {
                         if (value instanceof Array){
-                            if (value[0] instanceof DateObject) props.setCheckInDate(new Date(value[0].toDate().toLocaleDateString()));
-                            if (value[1] instanceof DateObject) props.setCheckOutDate(new Date(value[1].toDate().toLocaleDateString()));
-                        }
-                        if (value instanceof DateObject) {
-                            setDates(value.toDate())
+                            if (value[0] instanceof DateObject) props.setCheckInDate(value[0].toDate());
+                            if (value[1] instanceof DateObject) props.setCheckOutDate(value[1].toDate());
                         }}
                     }
                     mapDays= {({date}) => highlightBlockedDates(date)}

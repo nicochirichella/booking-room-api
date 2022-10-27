@@ -25,7 +25,6 @@ export const BookingForm = (props: {
     const dispatch = useAppDispatch();
 
     const handleSaveBooking = async () => {
-        console.log('saving booking');
         const newBooking: BookingInterface = {
             name,
             email,

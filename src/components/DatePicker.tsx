@@ -33,11 +33,6 @@ export const DatePicker = (props: {
             dispatch(setCheckinDate(value.selection.startDate.getTime()));
         }
         if (value.selection?.endDate) dispatch(setCheckoutDate(value.selection.endDate.getTime()));
-
-        // localStorage.setItem('searchFilters', JSON.stringify({
-        //     startDate: value['selection'].startDate?.toISOString().split('T')[0],
-        //     endDate: value['selection'].endDate?.toISOString().split('T')[0]
-        // }));
     }
 
     return (
