@@ -3,7 +3,9 @@ import { makeStyles, Typography } from '@material-ui/core';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useParams } from 'react-router-dom';
 import hotels, { rooms } from '../InitialData';
-import { BookingInterface } from './Booking';
+import { BookingInterface } from '../types';
+import { selectBookings } from '../features/booking/bookingSlice';
+import { useAppSelector } from '../app/hooks';
 
 export const BookingGrid = () => {
     const classes = useStyle();
@@ -11,7 +13,8 @@ export const BookingGrid = () => {
     const hotel = hotels.find((item) => item.id === Number(hotelId));
     const room = rooms.find((item) => item.id === Number(roomId));
 
-    let bookings = localStorage.getItem('bookings') ? JSON.parse(localStorage.getItem('bookings') || '') : [];
+    // let bookings = localStorage.getItem('bookings') ? JSON.parse(localStorage.getItem('bookings') || '') : [];
+    let bookings = useAppSelector(selectBookings);
     
     if (roomId) {
         bookings = bookings.filter((booking: BookingInterface) => booking.roomId === Number(roomId));
@@ -20,7 +23,7 @@ export const BookingGrid = () => {
     }
 
     const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'id', headerName: 'ID', width: 130 },
         { field: 'hotelName', headerName: 'Hotel', width: 130 },
         { field: 'roomTitle', headerName: 'Room', width: 130 },
         { field: 'name', headerName: 'Name', width: 200 },

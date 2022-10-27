@@ -23,7 +23,7 @@ export const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const user = useAppSelector(selectUser).user;
+    const user = useAppSelector(selectUser);
 
     useEffect(() => {
         if (user) navigate("/");

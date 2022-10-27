@@ -1,10 +1,11 @@
 import { makeStyles, Typography, Grid } from '@material-ui/core';
 import { useParams, Link } from 'react-router-dom';
-import { BookingInterface } from '../Booking';
+import { BookingInterface } from '../../types';
 import { RoomCard } from '../RoomCard';
 import { rooms } from '../../InitialData';
 import { selectSearchFilters, SearchFiltersState } from '../../features/searchFilters/searchFiltersSlice';
 import { useAppSelector } from '../../app/hooks';
+import { selectBookings } from '../../features/booking/bookingSlice';
 
 export const SearchPage = () => {
     const classes = useStyle();
@@ -15,6 +16,10 @@ export const SearchPage = () => {
     };
 
     const searchFilters = useAppSelector(selectSearchFilters);
+    const bookings = useAppSelector(selectBookings);
+
+    console.log(searchFilters);
+    console.log(bookings);
 
     const bookingColapses = (booking: BookingInterface, filters: SearchFiltersState) => {
         const result = betweenDates(booking.startDate, booking.endDate, filters.checkinDate) 
@@ -24,8 +29,6 @@ export const SearchPage = () => {
         return result
     };
 
-    const bookings = JSON.parse(localStorage.getItem('bookings')?? '[]') as BookingInterface[];
-    //const searchFilters = JSON.parse(localStorage.getItem('searchFilters')?? '{}') as SearchFilters;
     const bookedRooms: BookingInterface[] = bookings.filter((booking: BookingInterface) => bookingColapses(booking, searchFilters));
    
     let hotelRooms = [];

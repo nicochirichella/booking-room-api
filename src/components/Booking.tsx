@@ -4,21 +4,6 @@ import React from 'react';
 import { makeStyles, Typography, Button, Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import hotels, { rooms } from '../InitialData';
-export interface BookingInterface {
-    id: number;
-    roomId: number;
-    hotelId: number;
-    startDate: number;
-    endDate: number;
-    name: string;
-    email: string;
-    phone: string;
-    description: string;
-    guests: number;
-    currency: string;
-    price: number;
-    paymentMethod: string;
-}
 
 export const Booking = () => {
     const classes = useStyle();

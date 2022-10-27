@@ -3,14 +3,16 @@ import { makeStyles, Typography, Button } from '@material-ui/core';
 import { useParams, Link } from 'react-router-dom';
 import { rooms } from '../../InitialData';
 import { BookingForm } from '../BookingForm';
-import { BookingInterface } from '../Booking';
+import { BookingInterface } from '../../types';
+import { selectBookings } from '../../features/booking/bookingSlice';
+import { useAppSelector } from '../../app/hooks';
 
 export const RoomPage = () => {
     const classes = useStyle();
     const { roomId, hotelId } = useParams();
     const room = rooms.find((item) => item.id === Number(roomId));
 
-    const bookings = JSON.parse(localStorage.getItem('bookings')?? '[]') as BookingInterface[];
+    const bookings = useAppSelector(selectBookings);
     const roomsBookings = bookings.filter((booking: BookingInterface) => booking.roomId === room?.id && booking.hotelId === room?.hotelId);
 
     const blockedDates: Date[][] = roomsBookings.map((booking: BookingInterface) => {

@@ -37,10 +37,10 @@ export const Header = () => {
                 </div>
                 <div className={ classes.right }>
                     {
-                        user.user ? (
+                        user ? (
                             <>
-                                <Typography className={ classes.user }>{user.user?.displayName}</Typography>
-                                <Avatar className={ classes.avatar } src={user.user?.photoURL} />
+                                <Typography className={ classes.user }>{user.displayName}</Typography>
+                                <Avatar className={ classes.avatar } src={user.photoURL} />
                                 <Typography className={ classes.logout } onClick={handleLogout}>Logout</Typography>
                             </>
                         ) : (

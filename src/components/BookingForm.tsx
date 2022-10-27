@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { makeStyles, Typography, Button, Input, TextField } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import hotels, { bookings } from '../InitialData';
-import { BookingInterface } from './Booking';
+import { BookingInterface } from '../types';
 import { DatePicker2 } from './DatePicker2';
+import { createBooking } from '../db/bookingRepository';
 
 export const BookingForm = (props: {
     blockedDates?: Date[][];
@@ -20,12 +20,9 @@ export const BookingForm = (props: {
     const [ endDate, setEndDate ] = useState(new Date());
     const [ description, setDescription ] = useState('');
 
-    const bookings = JSON.parse(localStorage.getItem('bookings')?? '[]') as BookingInterface[];
-
-    const handleSaveBooking = () => {
+    const handleSaveBooking = async () => {
         console.log('saving booking');
-        bookings.push({
-            id: bookings.length + 1,
+        const newBooking: BookingInterface = {
             name,
             email,
             phone,
@@ -34,12 +31,28 @@ export const BookingForm = (props: {
             description,
             roomId: Number(roomId),
             hotelId: Number(hotelId),
+            guests: 1,
             price: 100,
             currency: 'USD',
-            paymentMethod: 'cash',
-            guests: 1,
-        });
-        localStorage.setItem('bookings', JSON.stringify(bookings));
+            paymentMethod: 'cash'
+        };
+
+        await createBooking(newBooking);
+        // bookings.push({
+        //     name,
+        //     email,
+        //     phone,
+        //     startDate: startDate.getTime(),
+        //     endDate: endDate.getTime(),
+        //     description,
+        //     roomId: Number(roomId),
+        //     hotelId: Number(hotelId),
+        //     price: 100,
+        //     currency: 'USD',
+        //     paymentMethod: 'cash',
+        //     guests: 1,
+        // });
+        // localStorage.setItem('bookings', JSON.stringify(bookings));
         props.onClose();
     };
     

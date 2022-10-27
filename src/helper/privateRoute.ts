@@ -6,7 +6,7 @@ function PrivateRoute({ children }: any) {
     const navigate = useNavigate();
     
     const user = useAppSelector(selectUser);
-    const isAuthenticated = user.user ? true : false;
+    const isAuthenticated = user ? true : false;
     console.log('isAuthenticated', isAuthenticated);
     return isAuthenticated ? children : navigate('/login');
 }

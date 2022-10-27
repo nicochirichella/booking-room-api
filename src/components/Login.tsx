@@ -37,9 +37,9 @@ export const Login = () => {
         <>
             <div className={classes.root}>
                 {
-                    user.user ? (
+                    user ? (
                         <div className={classes.inputSection}>
-                            <h1> Welcome {user.user?.displayName} </h1>
+                            <h1> Welcome {user.displayName} </h1>
                         </div>
                     ) : (
                         <>
