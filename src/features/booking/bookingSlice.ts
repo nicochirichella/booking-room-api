@@ -27,17 +27,16 @@ export const bookingSlice = createSlice({
         deleteSelectedBooking: (state) => {
             state.selectedBooking = null;
         },
-        // update the bookings in the state
-        updateBookings: (state, action) => {
-            state.bookings = action.payload;
-        },
         setDbValues: (state, action) => {
             state.bookings = action.payload;
+        },
+        addBooking: (state, action) => {
+            state.bookings.push(action.payload);
         }
     }
 });
 
-export const { setSelectedBooking, updateSelectedBooking, deleteSelectedBooking, updateBookings, setDbValues } = bookingSlice.actions;
+export const { setSelectedBooking, updateSelectedBooking, deleteSelectedBooking, addBooking, setDbValues } = bookingSlice.actions;
 
 export const selectBookings = (state: RootState) => state.booking.bookings;
 

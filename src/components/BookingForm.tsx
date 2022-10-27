@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { BookingInterface } from '../types';
 import { DatePicker2 } from './DatePicker2';
 import { createBooking } from '../db/bookingRepository';
+import { useAppDispatch } from '../app/hooks';
+import { addBooking } from '../features/booking/bookingSlice';
 
 export const BookingForm = (props: {
     blockedDates?: Date[][];
@@ -19,6 +21,8 @@ export const BookingForm = (props: {
     const [ startDate, setStartDate ] = useState(new Date());
     const [ endDate, setEndDate ] = useState(new Date());
     const [ description, setDescription ] = useState('');
+
+    const dispatch = useAppDispatch();
 
     const handleSaveBooking = async () => {
         console.log('saving booking');
@@ -37,22 +41,9 @@ export const BookingForm = (props: {
             paymentMethod: 'cash'
         };
 
-        await createBooking(newBooking);
-        // bookings.push({
-        //     name,
-        //     email,
-        //     phone,
-        //     startDate: startDate.getTime(),
-        //     endDate: endDate.getTime(),
-        //     description,
-        //     roomId: Number(roomId),
-        //     hotelId: Number(hotelId),
-        //     price: 100,
-        //     currency: 'USD',
-        //     paymentMethod: 'cash',
-        //     guests: 1,
-        // });
-        // localStorage.setItem('bookings', JSON.stringify(bookings));
+        const savedBooking = await createBooking(newBooking);
+        dispatch(addBooking(savedBooking));
+        
         props.onClose();
     };
     

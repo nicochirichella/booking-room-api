@@ -31,15 +31,9 @@ export const DatePicker2 = (props: {
         if (blockedDates(date)) props.className = "highlight highlight-red"
         return props
     }
-
-    const [from, setFrom] = useState(new Date());
-    const [to, setTo] = useState(new Date());
+   
     const [dates, setDates] = useState(new Date());
 
-    const handleSelect = () => {
-        console.log('from', from);
-        console.log('to', to);
-    }
     return (
         <>
             <div className={ classes.root}>
@@ -48,8 +42,8 @@ export const DatePicker2 = (props: {
                     value={dates}
                     onChange={(value) => {
                         if (value instanceof Array){
-                            if (value[0] instanceof DateObject) props.setCheckInDate(value[0].toDate());
-                            if (value[1] instanceof DateObject) props.setCheckOutDate(value[1].toDate());
+                            if (value[0] instanceof DateObject) props.setCheckInDate(new Date(value[0].toDate().toLocaleDateString()));
+                            if (value[1] instanceof DateObject) props.setCheckOutDate(new Date(value[1].toDate().toLocaleDateString()));
                         }
                         if (value instanceof DateObject) {
                             setDates(value.toDate())

@@ -44,7 +44,6 @@ export const DatePicker = (props: {
         <>
             <div className={classes.root}>
                 <DateRangePicker ranges={[selectionRange]} 
-                disabledDates={[new Date('2021-10-05'), new Date('2021-10-15')]}
                 onChange={(value) => handleSelect(value)} />
                 <div className={classes.inputSection}>
                 <Button 
